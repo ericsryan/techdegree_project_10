@@ -39,7 +39,6 @@ class TodoList(Resource):
         )
         super().__init__()
 
-    @marshal_with(todo_fields)
     def get(self):
         todos = [marshal(todo, todo_fields) for todo in models.Todo.select()]
         return {'todos': todos}
