@@ -30,6 +30,11 @@ class TodoList(Resource):
             help='No TODO name provided',
             location=['form', 'json']
         )
+        self.reqparse.add_argument(
+            'completed',
+            location=['form', 'json'],
+            type=inputs.boolean
+        )
         super().__init__()
 
     def get(self):
