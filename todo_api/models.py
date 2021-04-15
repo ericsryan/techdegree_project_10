@@ -6,8 +6,8 @@ DATABASE = SqliteDatabase('todos.sqlite')
 
 
 class Todo(Model):
-    task = CharField()
-    url = CharField(unique=True)
+    name = CharField()
+    completed = BooleanField(default=False)
     created_at = DateTimeField(default=datetime.datetime.now)
 
     class Meta:

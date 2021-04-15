@@ -7,8 +7,8 @@ import models
 
 todo_fields = {
     'id': fields.Integer,
-    'task': fields.String,
-    'url': fields.String
+    'name': fields.String,
+    'completed': fields.Boolean
 }
 
 
@@ -25,23 +25,16 @@ class TodoList(Resource):
     def __init__(self):
         self.reqparse = reqparse.RequestParser()
         self.reqparse.add_argument(
-            'task',
+            'name',
             required=True,
-            help='No TODO task provided',
+            help='No TODO name provided',
             location=['form', 'json']
-        )
-        self.reqparse.add_argument(
-            'url',
-            required=True,
-            help='No TODO url provided',
-            location=['form', 'json'],
-            type=inputs.url
         )
         super().__init__()
 
     def get(self):
         todos = [marshal(todo, todo_fields) for todo in models.Todo.select()]
-        return {'todos': todos}
+        return todos
 
     @marshal_with(todo_fields)
     def post(self):
@@ -57,17 +50,15 @@ class Todo(Resource):
     def __init__(self):
         self.reqparse = reqparse.RequestParser()
         self.reqparse.add_argument(
-            'task',
+            'name',
             required=True,
-            help='No TODO task provided',
+            help='No TODO name provided',
             location=['form', 'json']
         )
         self.reqparse.add_argument(
-            'url',
-            required=True,
-            help='No TODO url provided',
+            'completed',
             location=['form', 'json'],
-            type=inputs.url
+            type=inputs.boolean
         )
         super().__init__()
 
